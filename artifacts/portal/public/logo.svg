@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#D4AF37" stroke-width="2"/>
+  <circle cx="100" cy="100" r="85" fill="#0F5132" />
+  <text x="100" y="115" font-family="'Playfair Display', serif" font-size="64" font-weight="700" fill="#D4AF37" text-anchor="middle" letter-spacing="2">EOC</text>
+  <path d="M50 140 Q100 170 150 140" fill="none" stroke="#D4AF37" stroke-width="2" />
+  <circle cx="100" cy="155" r="4" fill="#D4AF37" />
+</svg>

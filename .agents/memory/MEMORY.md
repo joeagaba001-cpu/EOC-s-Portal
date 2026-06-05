@@ -1,0 +1,2 @@
+- [Express 5 route handler types](express5-route-types.md) — Express 5 requires explicit `: Promise<void>` return type on async handlers and `void` returns from middleware.
+- [EOC Portal architecture](eoc-portal-arch.md) — Key decisions for Elizabeth Okwori's Confectionery NGO enrollment portal.

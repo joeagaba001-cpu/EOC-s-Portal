@@ -1,0 +1,715 @@
+Since you are requesting a formal document that can be handed directly to a UI/UX designer, software architect, and development team, I've prepared a more detailed and professional PRD that includes the portal layout, navigation system (horizontal bars and grid menu), user flows, administrative controls, notifications, payment verification, and enrollment workflow.
+
+# PRODUCT REQUIREMENTS DOCUMENT (PRD)
+
+# ELIZABETH OKWORI'S CONFECTIONERY
+
+## NGO Catering Skills Training & Enrollment Portal
+
+Version: 1.0
+
+---
+
+# 1. PROJECT OVERVIEW
+
+Elizabeth Okwori's Confectionery is a non-governmental organization dedicated to empowering individuals through vocational training in catering-related skills, including cooking, baking, pastry making, food production, catering services, food business management, and related culinary disciplines.
+
+The purpose of this portal is to provide a digital platform where participants can register, enroll in catering courses, submit payment proofs, receive updates, and interact with the NGO while allowing NGO Officers to manage enrollments and registrations efficiently.
+
+---
+
+# 2. PROJECT OBJECTIVES
+
+## Primary Objectives
+
+* Provide an elegant and professional online enrollment portal.
+* Allow participants to register and enroll in catering programs.
+* Allow NGO Officers to manage applicants and confirmations.
+* Digitize payment verification processes.
+* Improve communication through notifications and email updates.
+
+## Secondary Objectives
+
+* Reduce manual paperwork.
+* Improve enrollment tracking.
+* Increase participant engagement.
+* Create a scalable platform for future online learning.
+
+---
+
+# 3. USER ROLES
+
+## Participant
+
+Individuals seeking catering training.
+
+### Permissions
+
+* Register account
+* Login
+* Edit profile
+* Select skills
+* View pricing packages
+* Upload proof of payment
+* Receive notifications
+* Receive email updates
+
+---
+
+## NGO Officer
+
+Authorized personnel managing the platform.
+
+### Permissions
+
+* Access Officer Dashboard
+* View participant registrations
+* Approve payments
+* Send notifications
+* Manage skills and pricing
+* Manage announcements
+* View reports
+
+---
+
+# 4. PORTAL DESIGN REQUIREMENTS
+
+## Design Style
+
+The portal should be:
+
+* Elegant
+* Modern
+* Professional
+* Mobile Responsive
+* Easy to navigate
+* Accessible
+
+---
+
+## Color Scheme
+
+### Primary Color
+
+Deep Emerald Green (#0F5132)
+
+### Secondary Color
+
+Gold (#D4AF37)
+
+### Accent Color
+
+Cream (#FFF8E7)
+
+### Background
+
+White (#FFFFFF)
+
+### Text Color
+
+Dark Gray (#333333)
+
+---
+
+## Typography
+
+### Headings
+
+Playfair Display
+
+### Body Text
+
+Poppins
+
+---
+
+# 5. WEBSITE LAYOUT STRUCTURE
+
+## Top Navigation Bar (Horizontal Bar)
+
+The top section should contain:
+
+* NGO Logo
+* Home
+* About Us
+* Training Programs
+* Registration
+* Login
+* Contact Us
+* Notifications Icon
+
+---
+
+## Grid Menu Interface
+
+A responsive grid system should be used for quick access.
+
+### Grid Cards
+
+* My Profile
+* Catering Skills
+* Enrollment Packages
+* Payment Upload
+* Notifications
+* Updates
+* Support
+* Logout
+
+Grid cards should have icons and elegant hover effects.
+
+---
+
+# 6. REGISTRATION SYSTEM
+
+Upon clicking Register, users must choose:
+
+### Register as Participant
+
+### Register as NGO Officer
+
+---
+
+# 7. NGO OFFICER REGISTRATION
+
+Required Fields:
+
+* Full Name
+* Sex
+* Phone Number
+* Email Address
+* NGO Officer Code
+
+---
+
+## NGO Officer Code Validation
+
+Official NGO Officer Code:
+
+EOC135
+
+### Successful Validation
+
+* Account created
+* Officer dashboard access granted
+
+### Failed Validation
+
+Display:
+
+"Invalid NGO Officer Code. Registration terminated."
+
+No account should be created.
+
+---
+
+# 8. PARTICIPANT REGISTRATION
+
+Required Fields:
+
+* Full Name
+* Sex
+* Phone Number
+* Email Address
+* Password
+* Confirm Password
+
+Validation Rules:
+
+* Unique email
+* Unique phone number
+* Password minimum 8 characters
+* Password confirmation must match
+
+---
+
+# 9. ACCOUNT CREATION NOTIFICATIONS
+
+After successful registration:
+
+## Email Notification to Registrant
+
+Subject:
+Welcome to Elizabeth Okwori's Confectionery
+
+Message:
+Your account has been successfully created. You may now login and enroll in your preferred catering skills.
+
+---
+
+## NGO Portal Notification
+
+The NGO dashboard receives:
+
+"New account created."
+
+Including:
+
+* Name
+* Email
+* Registration Date
+
+---
+
+# 10. LOGIN SYSTEM
+
+Features:
+
+* Email Login
+* Password Login
+* Forgot Password
+* Reset Password
+* Remember Me
+
+---
+
+# 11. PARTICIPANT PROFILE PAGE
+
+Participants can view and edit:
+
+### Personal Information
+
+* Full Name
+* Phone Number
+* Email Address
+
+---
+
+## Profile Picture
+
+Options:
+
+### Upload Photo
+
+OR
+
+### Capture Photo Using Device Camera
+
+---
+
+## Save Changes Button
+
+Displays:
+
+"Profile updated successfully."
+
+---
+
+# 12. CATERING SKILLS ENROLLMENT
+
+Available Skills Include:
+
+## Cooking
+
+* Nigerian Dishes
+* Continental Dishes
+* Soups & Stews
+
+## Baking
+
+* Bread Production
+* Cake Baking
+* Cookie Making
+
+## Pastry Making
+
+* Meat Pie
+* Doughnuts
+* Puff Puff
+* Sausage Rolls
+
+## Catering Services
+
+* Event Catering
+* Food Packaging
+* Catering Management
+
+## Beverages
+
+* Smoothies
+* Natural Juices
+* Mocktails
+
+## Decoration
+
+* Cake Decoration
+* Dessert Presentation
+
+---
+
+# 13. SKILL SELECTION WORKFLOW
+
+Participants can tick multiple skills.
+
+Buttons:
+
+### Save Skills
+
+### Change Skills
+
+### Cancel
+
+---
+
+## Save Skills
+
+System:
+
+* Saves selected skills
+* Sends notification to NGO
+
+Notification:
+
+"Participant selected catering skills."
+
+---
+
+## Change Skills
+
+Returns participant to skill selection page.
+
+---
+
+## Cancel
+
+Returns participant to profile page.
+
+---
+
+# 14. PACKAGE AND PRICE POPUP
+
+After skills selection:
+
+Display popup showing:
+
+* Selected Skills
+* Available Packages
+* Package Duration
+* Package Price
+
+Example:
+
+Basic Package – ₦20,000
+
+Standard Package – ₦50,000
+
+Premium Package – ₦90,000
+
+Buttons:
+
+* Continue
+* Abort
+
+---
+
+# 15. CONTINUE WORKFLOW
+
+When Continue is selected:
+
+Display popup containing:
+
+### Official NGO WhatsApp Number
+
+[Admin Configurable]
+
+Message:
+
+Contact our official WhatsApp number to proceed with payment and enrollment confirmation.
+
+---
+
+## Chat Now Button
+
+Redirects to WhatsApp.
+
+Pre-filled message:
+
+Hello Elizabeth Okwori's Confectionery,
+
+Selected Skills:
+[Skills]
+
+Selected Package:
+[Package]
+
+Price:
+[Amount]
+
+I want to proceed with the payment of the package.
+
+---
+
+# 16. ABORT WORKFLOW
+
+When Abort is selected:
+
+Participant receives:
+
+"Enrollment process cancelled."
+
+NGO receives:
+
+"Participant aborted enrollment process."
+
+---
+
+# 17. PAYMENT PROOF SUBMISSION
+
+After payment:
+
+Participant returns to portal.
+
+---
+
+## Upload Proof Section
+
+Accepted Formats:
+
+* JPG
+* PNG
+* PDF
+
+Maximum Size:
+
+10MB
+
+---
+
+Buttons:
+
+### Upload Proof
+
+### Done
+
+After clicking Done:
+
+Submission sent to NGO dashboard.
+
+---
+
+# 18. PAYMENT VERIFICATION SYSTEM
+
+NGO Officer Dashboard displays:
+
+## Pending Payments
+
+Information displayed:
+
+* Participant Name
+* Selected Skills
+* Package
+* Upload Date
+* Payment Proof
+
+---
+
+Buttons:
+
+### Confirm
+
+### Reject
+
+---
+
+# 19. CONFIRMATION PROCESS
+
+If NGO Officer clicks Confirm:
+
+Participant sees popup:
+
+"Congratulations! You have been successfully registered."
+
+---
+
+## Automatic Email
+
+Subject:
+
+Registration Successfully Confirmed
+
+Message:
+
+Your payment has been verified and your enrollment has been approved.
+
+---
+
+## NGO Notification
+
+"Participant registration successfully confirmed."
+
+---
+
+# 20. REJECTION PROCESS
+
+If payment is rejected:
+
+Participant receives:
+
+"Your payment proof could not be verified. Please upload a valid proof."
+
+---
+
+# 21. NOTIFICATION CENTER
+
+Portal notifications should appear as:
+
+### Bell Notification Icon
+
+Located in the top navigation bar.
+
+Notifications include:
+
+* Account Created
+* Profile Updated
+* Skills Selected
+* Enrollment Cancelled
+* Payment Uploaded
+* Payment Approved
+* Payment Rejected
+* New Training Schedule
+* Event Announcements
+* NGO Updates
+
+---
+
+# 22. EMAIL UPDATE SYSTEM
+
+All important notifications should also be sent via email.
+
+Includes:
+
+* Registration Confirmation
+* Enrollment Updates
+* Payment Approval
+* Training Schedule
+* Venue Updates
+* General Announcements
+
+---
+
+# 23. NGO OFFICER DASHBOARD
+
+Dashboard Statistics:
+
+* Total Participants
+* Total NGO Officers
+* Pending Payments
+* Approved Enrollments
+* Active Courses
+* Recent Notifications
+
+---
+
+## Management Modules
+
+### Participant Management
+
+* Search Participants
+* View Profiles
+* View Enrollments
+* Export Reports
+
+### Skill Management
+
+* Add Skills
+* Edit Skills
+* Delete Skills
+* Update Prices
+
+### Notification Management
+
+* Send Individual Notifications
+* Send Bulk Notifications
+* Schedule Notifications
+
+---
+
+# 24. SECURITY REQUIREMENTS
+
+Authentication:
+
+* Password Hashing (bcrypt)
+* JWT Authentication
+* Secure Sessions
+
+File Upload Security:
+
+* File Type Validation
+* Virus Scanning
+* Encrypted Storage
+
+Data Security:
+
+* SSL Encryption
+* Secure Database
+* Activity Logs
+
+Role-Based Access:
+
+* Participant Access
+* NGO Officer Access
+
+---
+
+# 25. TECHNICAL STACK
+
+Frontend:
+
+* Next.js
+* React
+* TypeScript
+* Tailwind CSS
+
+Backend:
+
+* Node.js
+* Express.js
+
+Database:
+
+* PostgreSQL
+
+Storage:
+
+* AWS S3 or Cloudinary
+
+Email Service:
+
+* Resend
+* SendGrid
+* Nodemailer
+
+Messaging Integration:
+
+* WhatsApp Click-to-Chat API
+
+---
+
+# 26. FUTURE ENHANCEMENTS
+
+Phase 2:
+
+* Online Learning Portal
+* Video Tutorials
+* Attendance Tracking
+* Digital Certificates
+* Student Progress Tracking
+* Downloadable Materials
+* Online Assessments
+* Live Virtual Classes
+* Mobile Application
+
+---
+
+# SUCCESS METRICS
+
+* Total Registrations
+* Enrollment Conversion Rate
+* Payment Approval Rate
+* User Retention Rate
+* Email Delivery Rate
+* Participant Satisfaction Score
+* Course Completion Rate
+
+END OF DOCUMENT
+
+This version is suitable for handing directly to a UI/UX designer, software developer, or AI coding tool to build the complete Elizabeth Okwori's Confectionery portal.

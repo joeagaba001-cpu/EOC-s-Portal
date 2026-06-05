@@ -3,13 +3,31 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Elizabeth Okwori's Confectionery NGO Enrollment Portal API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: users
+    description: User profile operations
+  - name: skills
+    description: Catering skills management
+  - name: packages
+    description: Enrollment packages
+  - name: enrollments
+    description: Participant enrollments
+  - name: payments
+    description: Payment proof management
+  - name: notifications
+    description: Notification system
+  - name: dashboard
+    description: Officer dashboard statistics
+  - name: settings
+    description: Portal settings
+  - name: announcements
+    description: Announcements
 paths:
   /healthz:
     get:
@@ -24,6 +42,495 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /users/me:
+    get:
+      operationId: getMyProfile
+      tags: [users]
+      summary: Get current user profile
+      responses:
+        "200":
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+        "404":
+          description: User not found
+    put:
+      operationId: updateMyProfile
+      tags: [users]
+      summary: Update current user profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserProfileInput"
+      responses:
+        "200":
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+
+  /users/complete-registration:
+    post:
+      operationId: completeRegistration
+      tags: [users]
+      summary: Complete registration with role selection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegistrationInput"
+      responses:
+        "200":
+          description: Registration completed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+        "400":
+          description: Invalid officer code or bad request
+
+  /users:
+    get:
+      operationId: listParticipants
+      tags: [users]
+      summary: List participants (officer only)
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: role
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserProfile"
+
+  /skills:
+    get:
+      operationId: listSkills
+      tags: [skills]
+      summary: List all available catering skills
+      responses:
+        "200":
+          description: Skills list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Skill"
+    post:
+      operationId: createSkill
+      tags: [skills]
+      summary: Create a skill (officer only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SkillInput"
+      responses:
+        "201":
+          description: Created skill
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Skill"
+
+  /skills/{id}:
+    put:
+      operationId: updateSkill
+      tags: [skills]
+      summary: Update a skill (officer only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SkillInput"
+      responses:
+        "200":
+          description: Updated skill
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Skill"
+    delete:
+      operationId: deleteSkill
+      tags: [skills]
+      summary: Delete a skill (officer only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /packages:
+    get:
+      operationId: listPackages
+      tags: [packages]
+      summary: List enrollment packages
+      responses:
+        "200":
+          description: Packages list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Package"
+    post:
+      operationId: createPackage
+      tags: [packages]
+      summary: Create a package (officer only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PackageInput"
+      responses:
+        "201":
+          description: Created package
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Package"
+
+  /packages/{id}:
+    put:
+      operationId: updatePackage
+      tags: [packages]
+      summary: Update a package (officer only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PackageInput"
+      responses:
+        "200":
+          description: Updated package
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Package"
+    delete:
+      operationId: deletePackage
+      tags: [packages]
+      summary: Delete a package (officer only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /enrollments:
+    get:
+      operationId: listEnrollments
+      tags: [enrollments]
+      summary: List enrollments (officer gets all, participant gets own)
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Enrollments list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Enrollment"
+    post:
+      operationId: createEnrollment
+      tags: [enrollments]
+      summary: Create enrollment (participant only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EnrollmentInput"
+      responses:
+        "201":
+          description: Created enrollment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Enrollment"
+
+  /enrollments/{id}:
+    get:
+      operationId: getEnrollment
+      tags: [enrollments]
+      summary: Get enrollment details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Enrollment detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Enrollment"
+
+  /enrollments/{id}/abort:
+    patch:
+      operationId: abortEnrollment
+      tags: [enrollments]
+      summary: Abort an enrollment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Aborted enrollment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Enrollment"
+
+  /payments:
+    get:
+      operationId: listPayments
+      tags: [payments]
+      summary: List payments (officer gets all pending, participant gets own)
+      responses:
+        "200":
+          description: Payments list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Payment"
+    post:
+      operationId: submitPayment
+      tags: [payments]
+      summary: Submit payment proof
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentInput"
+      responses:
+        "201":
+          description: Payment submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+
+  /payments/{id}/confirm:
+    patch:
+      operationId: confirmPayment
+      tags: [payments]
+      summary: Confirm a payment (officer only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Payment confirmed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+
+  /payments/{id}/reject:
+    patch:
+      operationId: rejectPayment
+      tags: [payments]
+      summary: Reject a payment (officer only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Payment rejected
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+
+  /notifications:
+    get:
+      operationId: listNotifications
+      tags: [notifications]
+      summary: List notifications for current user
+      responses:
+        "200":
+          description: Notifications list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Notification"
+    post:
+      operationId: sendNotification
+      tags: [notifications]
+      summary: Send notification (officer only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NotificationInput"
+      responses:
+        "201":
+          description: Notification sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Notification"
+
+  /notifications/{id}/read:
+    patch:
+      operationId: markNotificationRead
+      tags: [notifications]
+      summary: Mark a notification as read
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Notification marked read
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Notification"
+
+  /dashboard/stats:
+    get:
+      operationId: getDashboardStats
+      tags: [dashboard]
+      summary: Get officer dashboard statistics
+      responses:
+        "200":
+          description: Dashboard statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardStats"
+
+  /settings:
+    get:
+      operationId: getSettings
+      tags: [settings]
+      summary: Get portal settings
+      responses:
+        "200":
+          description: Settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalSettings"
+    put:
+      operationId: updateSettings
+      tags: [settings]
+      summary: Update portal settings (officer only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortalSettingsInput"
+      responses:
+        "200":
+          description: Updated settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortalSettings"
+
+  /announcements:
+    get:
+      operationId: listAnnouncements
+      tags: [announcements]
+      summary: List announcements
+      responses:
+        "200":
+          description: Announcements list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Announcement"
+    post:
+      operationId: createAnnouncement
+      tags: [announcements]
+      summary: Create announcement (officer only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnnouncementInput"
+      responses:
+        "201":
+          description: Created announcement
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Announcement"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +541,359 @@ components:
       required:
         - status
 
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+        clerkId:
+          type: string
+        fullName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: ["string", "null"]
+        sex:
+          type: ["string", "null"]
+        role:
+          type: ["string", "null"]
+        profilePhotoUrl:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+      required:
+        - id
+        - clerkId
+        - fullName
+        - email
+        - createdAt
+
+    UserProfileInput:
+      type: object
+      properties:
+        fullName:
+          type: string
+        phone:
+          type: string
+        sex:
+          type: string
+        profilePhotoUrl:
+          type: string
+
+    RegistrationInput:
+      type: object
+      properties:
+        role:
+          type: string
+        phone:
+          type: string
+        sex:
+          type: string
+        officerCode:
+          type: ["string", "null"]
+      required:
+        - role
+        - phone
+        - sex
+
+    Skill:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        category:
+          type: string
+        description:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+      required:
+        - id
+        - name
+        - category
+        - createdAt
+
+    SkillInput:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+      required:
+        - name
+        - category
+
+    Package:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: ["string", "null"]
+        price:
+          type: integer
+        duration:
+          type: string
+        createdAt:
+          type: string
+      required:
+        - id
+        - name
+        - price
+        - duration
+        - createdAt
+
+    PackageInput:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: integer
+        duration:
+          type: string
+      required:
+        - name
+        - price
+        - duration
+
+    Enrollment:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        packageId:
+          type: integer
+        status:
+          type: string
+        skillIds:
+          type: array
+          items:
+            type: integer
+        whatsappNumber:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+        user:
+          $ref: "#/components/schemas/UserProfile"
+        package:
+          $ref: "#/components/schemas/Package"
+        skills:
+          type: array
+          items:
+            $ref: "#/components/schemas/Skill"
+      required:
+        - id
+        - userId
+        - packageId
+        - status
+        - skillIds
+        - createdAt
+
+    EnrollmentInput:
+      type: object
+      properties:
+        packageId:
+          type: integer
+        skillIds:
+          type: array
+          items:
+            type: integer
+      required:
+        - packageId
+        - skillIds
+
+    Payment:
+      type: object
+      properties:
+        id:
+          type: integer
+        enrollmentId:
+          type: integer
+        userId:
+          type: integer
+        proofUrl:
+          type: string
+        fileName:
+          type: string
+        status:
+          type: string
+        uploadedAt:
+          type: string
+        reviewedAt:
+          type: ["string", "null"]
+        user:
+          $ref: "#/components/schemas/UserProfile"
+        enrollment:
+          $ref: "#/components/schemas/Enrollment"
+      required:
+        - id
+        - enrollmentId
+        - userId
+        - proofUrl
+        - fileName
+        - status
+        - uploadedAt
+
+    PaymentInput:
+      type: object
+      properties:
+        enrollmentId:
+          type: integer
+        proofUrl:
+          type: string
+        fileName:
+          type: string
+      required:
+        - enrollmentId
+        - proofUrl
+        - fileName
+
+    Notification:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        title:
+          type: string
+        message:
+          type: string
+        type:
+          type: string
+        isRead:
+          type: boolean
+        createdAt:
+          type: string
+      required:
+        - id
+        - userId
+        - title
+        - message
+        - type
+        - isRead
+        - createdAt
+
+    NotificationInput:
+      type: object
+      properties:
+        targetUserId:
+          type: ["integer", "null"]
+        title:
+          type: string
+        message:
+          type: string
+        type:
+          type: string
+      required:
+        - title
+        - message
+        - type
+
+    DashboardStats:
+      type: object
+      properties:
+        totalParticipants:
+          type: integer
+        totalOfficers:
+          type: integer
+        pendingPayments:
+          type: integer
+        approvedEnrollments:
+          type: integer
+        activeSkills:
+          type: integer
+        recentNotifications:
+          type: integer
+        enrollmentsByStatus:
+          type: array
+          items:
+            type: object
+            properties:
+              status:
+                type: string
+              count:
+                type: integer
+            required:
+              - status
+              - count
+        recentActivity:
+          type: array
+          items:
+            $ref: "#/components/schemas/Notification"
+      required:
+        - totalParticipants
+        - totalOfficers
+        - pendingPayments
+        - approvedEnrollments
+        - activeSkills
+        - recentNotifications
+        - enrollmentsByStatus
+        - recentActivity
+
+    PortalSettings:
+      type: object
+      properties:
+        whatsappNumber:
+          type: ["string", "null"]
+        officerCode:
+          type: ["string", "null"]
+        contactEmail:
+          type: ["string", "null"]
+        address:
+          type: ["string", "null"]
+      required: []
+
+    PortalSettingsInput:
+      type: object
+      properties:
+        whatsappNumber:
+          type: string
+        contactEmail:
+          type: string
+        address:
+          type: string
+
+    Announcement:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        content:
+          type: string
+        createdAt:
+          type: string
+        createdBy:
+          type: integer
+      required:
+        - id
+        - title
+        - content
+        - createdAt
+        - createdBy
+
+    AnnouncementInput:
+      type: object
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+      required:
+        - title
+        - content
