@@ -15,12 +15,29 @@ router.get("/me", requireAuth, async (req: any, res): Promise<void> => {
     const clerkId = auth?.userId;
     if (!clerkId) { res.status(401).json({ error: "Unauthorized" }); return; }
 
-    const [user] = await db.select().from(usersTable).where(eq(usersTable.clerkId, clerkId)).limit(1);
+    // First try to find by clerkId
+    let [user] = await db.select().from(usersTable).where(eq(usersTable.clerkId, clerkId)).limit(1);
 
     if (!user) {
-      const clerkUser = (auth as any).sessionClaims;
-      const email = (clerkUser?.email as string) || "";
-      const fullName = `${clerkUser?.firstName || ""} ${clerkUser?.lastName || ""}`.trim() || "User";
+      const claims = (auth as any).sessionClaims ?? {};
+      // Clerk JWT may store email as "email" or inside "external_accounts"; fall back to null
+      const rawEmail: string = (claims.email as string) || "";
+      const email: string | null = rawEmail.trim() || null;
+      const fullName = `${claims.firstName || ""}${claims.firstName && claims.lastName ? " " : ""}${claims.lastName || ""}`.trim() || "User";
+
+      // If we have a real email, check whether a row already exists (e.g. from a previous partial sign-up)
+      if (email) {
+        const [existing] = await db.select().from(usersTable).where(eq(usersTable.email, email)).limit(1);
+        if (existing) {
+          // Re-link the clerkId to the existing row
+          [user] = await db.update(usersTable)
+            .set({ clerkId })
+            .where(eq(usersTable.id, existing.id))
+            .returning();
+          res.json(formatUser(user));
+          return;
+        }
+      }
 
       const [newUser] = await db.insert(usersTable).values({ clerkId, fullName, email }).returning();
       res.json(formatUser(newUser));
