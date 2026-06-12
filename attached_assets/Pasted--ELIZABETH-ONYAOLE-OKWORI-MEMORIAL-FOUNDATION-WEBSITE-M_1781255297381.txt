@@ -1,0 +1,668 @@
+# ELIZABETH ONYAOLE OKWORI MEMORIAL FOUNDATION
+
+# WEBSITE MODIFICATION PRD (VERSION 2.0)
+
+## Project Type
+
+Enhancement and Expansion of Existing Website
+
+## Version
+
+2.0
+
+---
+
+# 1. PROJECT OVERVIEW
+
+The existing NGO training portal shall be upgraded and rebranded into a comprehensive Foundation website that combines:
+
+* Free vocational training enrollment
+* Foundation activities
+* Sponsorship and partnership management
+* Beneficiary fund disbursement requests
+* Bakery and catering order management
+* Educational resources and blog content
+* Customer ordering and delivery tracking
+
+The platform shall serve participants, customers, sponsors, partners, beneficiaries, and NGO officials through a unified system.
+
+---
+
+# 2. REBRANDING REQUIREMENT
+
+## Current Name
+
+Elizabeth Okwori's Confectionery
+
+## New Name
+
+ELIZABETH ONYAOLE OKWORI MEMORIAL FOUNDATION
+
+### Changes Required
+
+Update:
+
+* Website title
+* Header
+* Logo area
+* Footer
+* Email templates
+* Notifications
+* Dashboard branding
+* WhatsApp messages
+* Browser tab title
+
+---
+
+# 3. WEBSITE NAVIGATION STRUCTURE
+
+The website navigation menu shall contain:
+
+* Home
+* About Us
+* Training Programs
+* Shop
+* Custom Orders
+* Delivery Information
+* FAQ
+* Reviews
+* Gallery
+* Blog
+* Contact
+* Login
+* Register
+
+---
+
+# 4. PROGRAMS SECTION ENHANCEMENT
+
+## Training Programs
+
+Every training category shall display:
+
+* High-quality professional images
+* Image gallery slider
+* Program description
+* Learning outcomes
+
+### Example Categories
+
+Cooking
+Baking
+Pastry Making
+Food Packaging
+Event Catering
+Cake Decoration
+Dessert Production
+Beverage Production
+
+Each course card should contain:
+
+* Elegant image
+* Program title
+* Program summary
+* Apply button
+
+---
+
+# 5. ABOUT US SECTION
+
+## Foundation Name
+
+ELIZABETH ONYAOLE OKWORI MEMORIAL FOUNDATION
+
+### Address
+
+NO. 25, DAVID STONE STREET, OTUKPO, NIGERIA
+
+---
+
+## Aims and Objectives
+
+TO OFFER FREE VOCATIONAL TRAINING TO THE LESS PRIVILEGED AND NEEDY.
+
+UNLEASHING THE CREATIVE, LEARNING, LEADERSHIP, AND ENTREPRENEURIAL POTENTIAL OF OUR YOUTH.
+
+WORKING TOWARDS A STRONG AND SUSTAINABLE FUTURE.
+
+ENHANCING QUALITY, WELL-ROUNDED, AND WHOLESOME EDUCATION ENCOMPASSING COGNITIVE, EMOTIONAL, AND GODLY VALUES.
+
+---
+
+# 6. CONTACT PAGE
+
+## Contact Numbers
+
+08034514674
+
+09132094696
+
+08103938592
+
+---
+
+## WhatsApp
+
+08122990636
+
+---
+
+## Emails
+
+[odehonyema97@gmail.com](mailto:odehonyema97@gmail.com)
+
+[odehpaul629@gmail.com](mailto:odehpaul629@gmail.com)
+
+---
+
+# 7. FREE TRAINING MODIFICATION
+
+Remove:
+
+* Package Selection
+* Package Pricing
+* Payment Verification for Training Enrollment
+
+Replace with:
+
+### Free Enrollment Confirmation
+
+After skill selection:
+
+Participant receives:
+
+"You have successfully applied for this free training program."
+
+NGO receives:
+
+"New participant training application submitted."
+
+---
+
+# 8. PARTNERSHIP & SPONSORSHIP PAGE
+
+Create a dedicated page.
+
+### Section 1
+
+ACCEPT DONATIONS FROM INDIVIDUALS, TRUSTEES, FRIENDS, CHARITY ASSOCIATIONS, CORPORATE BODIES AND ASSOCIATIONS IN NIGERIA OR ELSEWHERE.
+
+### Section 2
+
+RECEIVE GRANTS OR ASSISTANCE FROM INDIVIDUALS, TRUSTS, ASSOCIATIONS AND OTHER CHARITABLE OR PHILANTHROPIC ORGANIZATIONS IN NIGERIA OR ELSEWHERE.
+
+---
+
+## Sponsorship Form
+
+Fields:
+
+* Full Name
+* Organization
+* Email
+* Phone Number
+* Sponsorship Type
+* Donation Amount
+* Message
+
+Submit Button
+
+NGO Dashboard Notification
+
+---
+
+# 9. BENEFICIARY FUND DISBURSEMENT SYSTEM
+
+Create new module.
+
+### Purpose
+
+Allow participants to apply for financial support.
+
+---
+
+## Application Form
+
+Fields:
+
+* Full Name
+* Participant ID
+* Reason for Request
+* Amount Requested
+* Supporting Documents
+* Bank Details
+
+---
+
+## NGO Dashboard
+
+Officials can:
+
+* Review Requests
+* Approve Requests
+* Reject Requests
+* Add Notes
+
+---
+
+## Status Tracking
+
+Applicant can see:
+
+Pending
+
+Approved
+
+Rejected
+
+Disbursed
+
+---
+
+# 10. CUSTOMER ORDERING SYSTEM
+
+Create separate customer account type.
+
+## User Types
+
+Participant
+
+NGO Officer
+
+Customer
+
+Sponsor
+
+---
+
+# 11. CUSTOMER PROFILE
+
+Store:
+
+* Name
+* Phone Number
+* Email
+* Delivery Addresses
+* Order History
+* Saved Preferences
+
+---
+
+## AI Customer Memory
+
+System remembers:
+
+* Favorite flavors
+* Preferred cake sizes
+* Frequently ordered products
+* Delivery preferences
+
+Provides recommendations automatically.
+
+---
+
+# 12. CUSTOM CAKE ORDERING SYSTEM
+
+Order Form Fields
+
+### Cake Size
+
+* Small
+* Medium
+* Large
+* Extra Large
+
+### Flavor
+
+* Vanilla
+* Chocolate
+* Red Velvet
+* Strawberry
+* Fruit Cake
+* Custom
+
+### Customizations
+
+* Name on Cake
+* Custom Message
+
+### Upload Inspiration Images
+
+PNG
+
+JPG
+
+JPEG
+
+---
+
+## Delivery Information
+
+* Delivery Date
+* Delivery Time
+
+---
+
+## Occasion Types
+
+Birthday
+
+Wedding
+
+Anniversary
+
+Graduation
+
+Housewarming
+
+Corporate Event
+
+Religious Celebration
+
+Other
+
+---
+
+## Emergency Order Option
+
+Priority processing available.
+
+AI Review checks:
+
+* Design feasibility
+* Timeline feasibility
+* Delivery feasibility
+
+---
+
+# 13. ORDER MANAGEMENT
+
+After submission:
+
+NGO Officers receive notification.
+
+Officials may:
+
+* Accept Order
+* Modify Quote
+* Assign Participant Baker
+* Assign Staff
+
+---
+
+# 14. DYNAMIC PRICING SYSTEM
+
+Prices determined by:
+
+* Cake Size
+* Flavor
+* Decoration Complexity
+* Delivery Distance
+* Emergency Request
+
+NGO Officials can modify pricing manually.
+
+---
+
+# 15. ORDER ACTION BUTTONS
+
+### Website Order Button
+
+Place Order
+
+---
+
+### WhatsApp Backup Button
+
+Send Order via WhatsApp
+
+Pre-filled order summary included.
+
+---
+
+# 16. PAYMENT SYSTEM
+
+Support:
+
+Card Payment
+
+Bank Transfer
+
+USSD
+
+Mobile Money
+
+Pay on Delivery
+
+---
+
+# 17. DELIVERY TRACKING
+
+Customers can monitor order status.
+
+Stages:
+
+Preparing
+
+Baking
+
+Decorating
+
+Out for Delivery
+
+Delivered
+
+Progress bar required.
+
+---
+
+# 18. CUSTOMER REVIEW SYSTEM
+
+Customers can:
+
+* Leave Reviews
+* Give Star Ratings
+* Upload Images
+
+Display:
+
+Average Rating
+
+Recent Reviews
+
+Featured Testimonials
+
+---
+
+# 19. EDUCATIONAL RESOURCE CENTER
+
+Create Blog & Resource Center.
+
+Categories:
+
+Cake Storage Tips
+
+Baking Tips
+
+Event Planning Ideas
+
+Food Business Advice
+
+Training Announcements
+
+Success Stories
+
+Foundation Updates
+
+---
+
+## Content Management
+
+NGO Officials can:
+
+* Upload Articles
+* Edit Articles
+* Delete Articles
+* Upload Images
+
+---
+
+# 20. GALLERY PAGE
+
+Display:
+
+Training Activities
+
+Graduation Events
+
+Products
+
+Cake Designs
+
+Community Outreach
+
+Foundation Activities
+
+Use elegant masonry gallery layout.
+
+---
+
+# 21. FRONTEND REQUIREMENTS
+
+Fast Loading
+
+Mobile Responsive
+
+Tablet Responsive
+
+Elegant User Interface
+
+Simple Navigation
+
+Easy Checkout
+
+SEO Friendly
+
+Accessibility Compliant
+
+---
+
+# 22. BACKEND REQUIREMENTS
+
+Order Management System
+
+Inventory Tracking
+
+Customer Management
+
+Participant Management
+
+Training Management
+
+Notification System
+
+Email System
+
+Analytics Dashboard
+
+Report Generation
+
+---
+
+# 23. ANALYTICS DASHBOARD
+
+Display:
+
+Total Participants
+
+Total Customers
+
+Orders Received
+
+Orders Delivered
+
+Pending Orders
+
+Sponsors
+
+Donation Amounts
+
+Beneficiaries Supported
+
+Website Traffic
+
+---
+
+# 24. SECURITY REQUIREMENTS
+
+SSL Certificate
+
+Secure Authentication
+
+Role-Based Access Control
+
+Secure Payment Gateway
+
+File Upload Protection
+
+Encrypted Database Fields
+
+Automated Daily Backup
+
+Disaster Recovery System
+
+Activity Logging
+
+Fraud Monitoring
+
+---
+
+# 25. RECOMMENDED TECH STACK
+
+Frontend
+
+* Next.js
+* React
+* TypeScript
+* Tailwind CSS
+
+Backend
+
+* Node.js
+* Express.js
+
+Database
+
+* PostgreSQL
+
+Storage
+
+* Cloudinary
+
+Payments
+
+* Paystack
+* Flutterwave
+
+Email
+
+* Resend
+
+Hosting
+
+* Replit Deployment or Vercel
+
+---
+
+# SUCCESS CRITERIA
+
+* Successful free training enrollment
+* Successful sponsorship registration
+* Successful fund request management
+* Successful online ordering
+* Real-time delivery tracking
+* Customer satisfaction above 90%
+* Secure payment processing
+* Mobile-first user experience
+
+END OF VERSION 2.0 MODIFICATION PRD

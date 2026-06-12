@@ -134,7 +134,7 @@ router.get("/", requireAuth, async (req: any, res): Promise<void> => {
       );
       const filtered = users.filter(u =>
         u.fullName.toLowerCase().includes(search.toLowerCase()) ||
-        u.email.toLowerCase().includes(search.toLowerCase())
+        (u.email ?? "").toLowerCase().includes(search.toLowerCase())
       );
       res.json(filtered.map(formatUser));
       return;

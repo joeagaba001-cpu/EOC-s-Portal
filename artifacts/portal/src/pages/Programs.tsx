@@ -1,11 +1,28 @@
-import { ParticipantLayout } from "@/components/layout/ParticipantLayout";
-import { useListSkills, useListPackages } from "@workspace/api-client-react";
+import { PublicLayout } from "@/components/layout/PublicLayout";
+import { useListSkills } from "@workspace/api-client-react";
 import { Link } from "wouter";
-import { Loader2, BookOpen } from "lucide-react";
+import { Loader2, BookOpen, CheckCircle2 } from "lucide-react";
+
+const programImages: Record<string, string> = {
+  "Baking & Pastry": "🥐",
+  "Main Courses": "🍳",
+  "Beverages": "☕",
+  "Packaging": "📦",
+  "Event Catering": "🍽️",
+  "Confectionery": "🍬",
+};
+
+const outcomes = [
+  "Industry-ready practical skills",
+  "Official Foundation certificate",
+  "Hands-on training with real equipment",
+  "Entrepreneurship and business guidance",
+  "Networking with fellow graduates",
+  "100% free — no hidden fees",
+];
 
 export default function Programs() {
-  const { data: skills, isLoading: loadingSkills } = useListSkills();
-  const { data: packages, isLoading: loadingPackages } = useListPackages();
+  const { data: skills, isLoading } = useListSkills();
 
   const grouped = skills?.reduce((acc: Record<string, any[]>, s) => {
     (acc[s.category] = acc[s.category] || []).push(s);
@@ -13,33 +30,53 @@ export default function Programs() {
   }, {}) || {};
 
   return (
-    <ParticipantLayout>
+    <PublicLayout>
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center py-14 mb-10">
-          <p className="text-secondary font-semibold uppercase tracking-widest text-xs mb-4">Catering Excellence</p>
+          <p className="text-secondary font-semibold uppercase tracking-widest text-xs mb-4">100% Free Training</p>
           <h1 className="text-5xl font-serif font-bold text-primary leading-tight mb-6">Our Training Programs</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Professionally structured catering skill courses designed for real-world application and career development.
+            Professionally structured catering courses designed for real-world application and career development — completely free for all participants.
           </p>
         </div>
 
+        {/* Learning outcomes */}
+        <div className="bg-primary/5 rounded-2xl border border-primary/10 p-8 mb-14">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-serif font-bold text-primary">What You Will Gain</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {outcomes.map((o) => (
+              <div key={o} className="flex items-center gap-3">
+                <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
+                <span className="text-sm text-gray-700">{o}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Skills by category */}
-        {loadingSkills ? (
+        {isLoading ? (
           <div className="flex justify-center py-12"><Loader2 className="w-8 h-8 animate-spin text-primary" /></div>
         ) : !skills?.length ? (
           <div className="text-center py-12 text-muted-foreground">
             <BookOpen className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-            <p>Skills will be listed here once added by the NGO.</p>
+            <p>Programs will be listed here once added by the NGO.</p>
           </div>
         ) : (
-          <div className="mb-16 space-y-10">
+          <div className="mb-16 space-y-12">
             {Object.entries(grouped).map(([category, catSkills]) => (
               <div key={category}>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="h-px flex-1 bg-gray-200" />
-                  <h2 className="font-serif font-bold text-2xl text-primary whitespace-nowrap">{category}</h2>
-                  <div className="h-px flex-1 bg-gray-200" />
+                {/* Category header with banner */}
+                <div className="relative rounded-2xl overflow-hidden mb-6 bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/10">
+                  <div className="px-8 py-6 flex items-center gap-5">
+                    <div className="text-5xl">{programImages[category] || "🍴"}</div>
+                    <div>
+                      <h2 className="font-serif font-bold text-2xl text-primary">{category}</h2>
+                      <p className="text-sm text-muted-foreground mt-1">{catSkills.length} course{catSkills.length > 1 ? "s" : ""} available</p>
+                    </div>
+                  </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {catSkills.map((skill: any) => (
@@ -47,13 +84,16 @@ export default function Programs() {
                       key={skill.id}
                       className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 hover:shadow-md hover:border-primary/30 transition-all group"
                     >
-                      <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
-                        <BookOpen className="w-5 h-5 text-primary" />
+                      <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors text-xl">
+                        {programImages[category] || "🍴"}
                       </div>
-                      <h3 className="font-semibold text-gray-900 mb-1">{skill.name}</h3>
+                      <h3 className="font-semibold text-gray-900 mb-1 group-hover:text-primary transition-colors">{skill.name}</h3>
                       {skill.description && (
-                        <p className="text-sm text-muted-foreground">{skill.description}</p>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{skill.description}</p>
                       )}
+                      <div className="mt-4 pt-4 border-t border-gray-50">
+                        <span className="text-xs text-green-600 font-semibold bg-green-50 px-3 py-1 rounded-full">Free Enrollment</span>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -62,69 +102,23 @@ export default function Programs() {
           </div>
         )}
 
-        {/* Pricing packages */}
-        <div className="mb-16">
-          <div className="text-center mb-10">
-            <p className="text-secondary font-semibold uppercase tracking-widest text-xs mb-3">Enrollment</p>
-            <h2 className="text-3xl font-serif font-bold text-gray-900">Choose Your Package</h2>
-            <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-              Select the package that fits your learning goals and budget. All packages include hands-on training and certification.
-            </p>
-          </div>
-
-          {loadingPackages ? (
-            <div className="flex justify-center py-8"><Loader2 className="w-6 h-6 animate-spin text-primary" /></div>
-          ) : !packages?.length ? (
-            <p className="text-center text-muted-foreground">Packages will be available soon.</p>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {packages.map((pkg: any, i: number) => {
-                const isHighlighted = i === Math.floor(packages.length / 2);
-                return (
-                  <div
-                    key={pkg.id}
-                    className={`relative rounded-3xl p-8 ${isHighlighted ? "bg-primary text-white shadow-2xl scale-105" : "bg-white border border-gray-200 shadow-sm hover:shadow-md"} transition-all`}
-                  >
-                    {isHighlighted && (
-                      <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-secondary text-secondary-foreground text-xs font-bold px-4 py-1.5 rounded-full">
-                        Most Popular
-                      </div>
-                    )}
-                    <div className={`text-4xl font-bold mb-2 ${isHighlighted ? "text-white" : "text-primary"}`}>
-                      ₦{pkg.price.toLocaleString()}
-                    </div>
-                    <h3 className={`font-serif text-xl font-semibold mb-2 ${isHighlighted ? "text-white" : "text-gray-900"}`}>{pkg.name}</h3>
-                    {pkg.description && (
-                      <p className={`text-sm mb-4 ${isHighlighted ? "text-primary-foreground/70" : "text-muted-foreground"}`}>{pkg.description}</p>
-                    )}
-                    <div className={`inline-flex text-xs font-medium px-3 py-1.5 rounded-full mb-6 ${isHighlighted ? "bg-white/20 text-white" : "bg-primary/10 text-primary"}`}>
-                      Duration: {pkg.duration}
-                    </div>
-                    <div>
-                      <Link href="/sign-up">
-                        <a className={`block text-center py-3 rounded-xl font-semibold text-sm transition-colors ${isHighlighted ? "bg-secondary text-secondary-foreground hover:bg-secondary/90" : "bg-primary text-white hover:bg-primary/90"}`}>
-                          Enroll Now
-                        </a>
-                      </Link>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-
         {/* CTA */}
-        <div className="bg-accent rounded-3xl p-10 text-center border border-secondary/20">
-          <h2 className="text-2xl font-serif font-bold text-primary mb-4">Ready to Start Learning?</h2>
-          <p className="text-muted-foreground mb-6">Register today and take the first step toward a thriving catering career.</p>
-          <Link href="/sign-up">
-            <a className="inline-flex bg-primary text-white font-semibold px-8 py-3 rounded-full hover:bg-primary/90 transition-colors">
-              Register for Enrollment
+        <div className="bg-primary rounded-3xl p-10 text-center">
+          <h2 className="text-3xl font-serif font-bold text-white mb-4">Apply for Free Training Today</h2>
+          <p className="text-primary-foreground/80 mb-8 text-lg max-w-xl mx-auto">
+            Registration is open. All programs are provided at zero cost to qualified participants.
+          </p>
+          <div className="flex gap-4 justify-center flex-wrap">
+            <Link href="/sign-up" className="bg-secondary text-secondary-foreground font-semibold px-8 py-3.5 rounded-full hover:bg-secondary/90 transition-colors">
+              Register Free Now
+            </Link>
+            <a href="https://wa.me/2348122990636?text=Hello! I'm interested in your free training programs." target="_blank" rel="noopener noreferrer"
+              className="bg-green-500 text-white font-semibold px-8 py-3.5 rounded-full hover:bg-green-600 transition-colors">
+              Enquire on WhatsApp
             </a>
-          </Link>
+          </div>
         </div>
       </div>
-    </ParticipantLayout>
+    </PublicLayout>
   );
 }

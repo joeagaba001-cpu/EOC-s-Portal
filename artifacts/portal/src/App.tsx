@@ -28,6 +28,12 @@ const OfficerSettings = lazy(() => import("./pages/officer/OfficerSettings"));
 
 const About = lazy(() => import("./pages/About"));
 const Programs = lazy(() => import("./pages/Programs"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Sponsorship = lazy(() => import("./pages/Sponsorship"));
+const BeneficiaryFund = lazy(() => import("./pages/BeneficiaryFund"));
+const FAQ = lazy(() => import("./pages/FAQ"));
+const Gallery = lazy(() => import("./pages/Gallery"));
+const Blog = lazy(() => import("./pages/Blog"));
 
 const clerkPubKey = publishableKeyFromHost(
   window.location.hostname,
@@ -159,8 +165,17 @@ function ClerkProviderWithRoutes() {
         <Suspense fallback={<PageLoader />}>
           <Switch>
             <Route path="/" component={HomeRedirect} />
+
+            {/* Public pages */}
             <Route path="/about" component={About} />
             <Route path="/programs" component={Programs} />
+            <Route path="/contact" component={Contact} />
+            <Route path="/sponsorship" component={Sponsorship} />
+            <Route path="/beneficiary" component={BeneficiaryFund} />
+            <Route path="/faq" component={FAQ} />
+            <Route path="/gallery" component={Gallery} />
+            <Route path="/blog" component={Blog} />
+
             <Route path="/sign-in/*?" component={SignInPage} />
             <Route path="/sign-up/*?" component={SignUpPage} />
             <Route path="/complete-registration" component={CompleteRegistration} />

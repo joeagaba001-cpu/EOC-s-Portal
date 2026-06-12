@@ -7,8 +7,8 @@ import { packagesTable } from "./packages";
 export const enrollmentsTable = pgTable("enrollments", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull().references(() => usersTable.id),
-  packageId: integer("package_id").notNull().references(() => packagesTable.id),
-  status: text("status").notNull().default("pending"), // pending | whatsapp_contacted | payment_uploaded | confirmed | rejected | aborted
+  packageId: integer("package_id").references(() => packagesTable.id),
+  status: text("status").notNull().default("pending"), // pending | confirmed | rejected | aborted
   whatsappNumber: text("whatsapp_number"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow().$onUpdate(() => new Date()),

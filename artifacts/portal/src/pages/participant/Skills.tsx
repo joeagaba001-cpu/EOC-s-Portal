@@ -1,51 +1,43 @@
 import { ParticipantLayout } from "@/components/layout/ParticipantLayout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { useListSkills, useListPackages, useCreateEnrollment, useGetSettings } from "@workspace/api-client-react";
+import { useListSkills, useCreateEnrollment } from "@workspace/api-client-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react";
+import { Loader2, CheckCircle2, MessageCircle } from "lucide-react";
 
 export default function Skills() {
-  const { data: skills, isLoading: loadingSkills } = useListSkills();
-  const { data: packages, isLoading: loadingPackages } = useListPackages();
-  const { data: settings } = useGetSettings();
+  const { data: skills, isLoading } = useListSkills();
   const createEnrollment = useCreateEnrollment();
   const { toast } = useToast();
 
   const [selectedSkills, setSelectedSkills] = useState<number[]>([]);
-  const [showPackageModal, setShowPackageModal] = useState(false);
-  const [selectedPackage, setSelectedPackage] = useState<number | null>(null);
   const [enrollmentComplete, setEnrollmentComplete] = useState(false);
 
+  const grouped = skills?.reduce((acc: Record<string, any[]>, s) => {
+    (acc[s.category] = acc[s.category] || []).push(s);
+    return acc;
+  }, {}) || {};
+
   const toggleSkill = (id: number) => {
-    setSelectedSkills(prev => 
+    setSelectedSkills(prev =>
       prev.includes(id) ? prev.filter(s => s !== id) : [...prev, id]
     );
   };
 
-  const handleContinue = () => {
+  const handleEnroll = () => {
     if (selectedSkills.length === 0) {
       toast({ title: "Select Skills", description: "Please select at least one skill to continue." });
       return;
     }
-    setShowPackageModal(true);
-  };
 
-  const handleEnroll = () => {
-    if (!selectedPackage) return;
-    
     createEnrollment.mutate({
-      data: {
-        skillIds: selectedSkills,
-        packageId: selectedPackage
-      }
+      data: { skillIds: selectedSkills } as any
     }, {
       onSuccess: () => {
         setEnrollmentComplete(true);
-        setShowPackageModal(false);
+        toast({ title: "Application Successful!", description: "You have been enrolled in your selected training programs." });
       },
       onError: (err) => {
         toast({ title: "Enrollment Failed", description: err.message, variant: "destructive" });
@@ -53,102 +45,122 @@ export default function Skills() {
     });
   };
 
-  if (loadingSkills || loadingPackages) {
+  if (isLoading) {
     return <ParticipantLayout><div className="flex justify-center p-12"><Loader2 className="w-8 h-8 animate-spin text-primary" /></div></ParticipantLayout>;
   }
 
-  const selectedPackageDetails = packages?.find(p => p.id === selectedPackage);
+  if (enrollmentComplete) {
+    return (
+      <ParticipantLayout>
+        <div className="max-w-2xl mx-auto">
+          <Card className="text-center py-16">
+            <CardHeader>
+              <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                <CheckCircle2 className="w-10 h-10 text-green-600" />
+              </div>
+              <CardTitle className="text-3xl text-primary font-serif">Application Successful!</CardTitle>
+              <CardDescription className="text-lg mt-4 leading-relaxed">
+                You have successfully applied for this free training program. You selected <strong>{selectedSkills.length}</strong> skill{selectedSkills.length > 1 ? "s" : ""}.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="mb-8 text-muted-foreground">
+                The NGO will review your application and contact you with further details about your training schedule and orientation date.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Button asChild size="lg" className="bg-green-600 hover:bg-green-700">
+                  <a
+                    href="https://wa.me/2348122990636?text=Hello! I just applied for free training on the EEOMF portal. Please confirm my enrollment."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    Follow Up on WhatsApp
+                  </a>
+                </Button>
+                <Button variant="outline" onClick={() => window.location.href = "/dashboard"}>
+                  Go to Dashboard
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </ParticipantLayout>
+    );
+  }
 
   return (
     <ParticipantLayout>
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-serif font-bold text-gray-900 mb-8">Catering Skills</h1>
-        
-        {enrollmentComplete ? (
-          <Card className="text-center py-12">
-            <CardHeader>
-              <CardTitle className="text-2xl text-primary font-serif">Enrollment Successful!</CardTitle>
-              <CardDescription className="text-lg mt-4">
-                You have selected {selectedSkills.length} skill(s) with the {selectedPackageDetails?.name} package.
-              </CardDescription>
+        <div className="mb-8">
+          <h1 className="text-3xl font-serif font-bold text-gray-900 mb-2">Apply for Free Training</h1>
+          <p className="text-muted-foreground">Select the catering skills you wish to learn. All programs are completely free of charge.</p>
+        </div>
+
+        {/* Info banner */}
+        <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-8 flex items-center gap-3">
+          <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />
+          <p className="text-sm text-green-800">
+            <strong>100% Free:</strong> All training programs are provided at no cost. Simply select your skills and submit your application.
+          </p>
+        </div>
+
+        {/* Skills grouped by category */}
+        {Object.entries(grouped).map(([category, catSkills]) => (
+          <Card key={category} className="mb-6">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg font-serif text-primary">{category}</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="mb-8 text-muted-foreground">To complete your registration, please make payment and contact the NGO via WhatsApp.</p>
-              <Button asChild size="lg" className="bg-green-600 hover:bg-green-700">
-                <a 
-                  href={`https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '')}?text=Hello! I just enrolled in the ${selectedPackageDetails?.name} package for ${selectedSkills.length} skills on the portal.`}
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                >
-                  Message on WhatsApp
-                </a>
-              </Button>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {catSkills.map((skill: any) => (
+                  <div
+                    key={skill.id}
+                    className={`flex items-start space-x-3 p-4 border rounded-xl hover:bg-gray-50 transition-all cursor-pointer ${selectedSkills.includes(skill.id) ? "border-primary bg-primary/5 ring-1 ring-primary/30" : "border-gray-200"}`}
+                    onClick={() => toggleSkill(skill.id)}
+                  >
+                    <Checkbox
+                      id={`skill-${skill.id}`}
+                      checked={selectedSkills.includes(skill.id)}
+                      onCheckedChange={() => toggleSkill(skill.id)}
+                      className="mt-0.5"
+                    />
+                    <div className="grid gap-1 leading-none">
+                      <label htmlFor={`skill-${skill.id}`} className="text-sm font-semibold leading-none cursor-pointer">
+                        {skill.name}
+                      </label>
+                      {skill.description && (
+                        <p className="text-xs text-muted-foreground mt-1">{skill.description}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </CardContent>
           </Card>
-        ) : (
-          <>
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle>Select Your Interests</CardTitle>
-                <CardDescription>Choose the catering skills you wish to learn.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {skills?.map((skill) => (
-                    <div key={skill.id} className="flex items-start space-x-3 p-4 border rounded-lg hover:bg-gray-50 transition-colors">
-                      <Checkbox 
-                        id={`skill-${skill.id}`} 
-                        checked={selectedSkills.includes(skill.id)}
-                        onCheckedChange={() => toggleSkill(skill.id)}
-                      />
-                      <div className="grid gap-1.5 leading-none">
-                        <label htmlFor={`skill-${skill.id}`} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
-                          {skill.name}
-                        </label>
-                        <p className="text-sm text-muted-foreground">{skill.category}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-8 flex justify-end">
-                  <Button onClick={handleContinue} disabled={selectedSkills.length === 0}>
-                    Continue to Packages ({selectedSkills.length} selected)
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+        ))}
 
-            <Dialog open={showPackageModal} onOpenChange={setShowPackageModal}>
-              <DialogContent className="sm:max-w-[500px]">
-                <DialogHeader>
-                  <DialogTitle className="font-serif text-xl">Select an Enrollment Package</DialogTitle>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  {packages?.map((pkg) => (
-                    <div 
-                      key={pkg.id} 
-                      className={`p-4 border rounded-xl cursor-pointer transition-all ${selectedPackage === pkg.id ? 'border-primary bg-primary/5 ring-2 ring-primary' : 'hover:border-gray-300'}`}
-                      onClick={() => setSelectedPackage(pkg.id)}
-                    >
-                      <div className="flex justify-between items-center mb-2">
-                        <h4 className="font-bold">{pkg.name}</h4>
-                        <span className="font-semibold text-primary">₦{pkg.price.toLocaleString()}</span>
-                      </div>
-                      <p className="text-sm text-muted-foreground">{pkg.description}</p>
-                      <div className="text-xs mt-2 bg-gray-100 inline-block px-2 py-1 rounded">Duration: {pkg.duration}</div>
-                    </div>
-                  ))}
-                </div>
-                <DialogFooter>
-                  <Button variant="outline" onClick={() => setShowPackageModal(false)}>Cancel</Button>
-                  <Button onClick={handleEnroll} disabled={!selectedPackage || createEnrollment.isPending}>
-                    {createEnrollment.isPending ? "Confirming..." : "Confirm Enrollment"}
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-          </>
-        )}
+        {/* Submit bar */}
+        <div className="sticky bottom-4 mt-4">
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-lg p-4 flex items-center justify-between gap-4">
+            <div>
+              <p className="font-semibold text-gray-900">
+                {selectedSkills.length > 0 ? `${selectedSkills.length} skill${selectedSkills.length > 1 ? "s" : ""} selected` : "No skills selected yet"}
+              </p>
+              <p className="text-xs text-muted-foreground">Free enrollment — no payment required</p>
+            </div>
+            <Button
+              onClick={handleEnroll}
+              disabled={selectedSkills.length === 0 || createEnrollment.isPending}
+              size="lg"
+            >
+              {createEnrollment.isPending
+                ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Submitting...</>
+                : "Submit Application"}
+            </Button>
+          </div>
+        </div>
       </div>
     </ParticipantLayout>
   );

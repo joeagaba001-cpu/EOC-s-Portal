@@ -6,3 +6,5 @@ export * from "./payments";
 export * from "./notifications";
 export * from "./settings";
 export * from "./announcements";
+export * from "./sponsorships";
+export * from "./beneficiary_requests";

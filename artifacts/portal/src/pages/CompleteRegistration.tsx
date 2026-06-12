@@ -55,7 +55,7 @@ export default function CompleteRegistration() {
     defaultValues: {
       role: "participant",
       phone: "",
-      sex: "Female", // EOC often caters to females primarily, good default
+      sex: "Female",
       officerCode: "",
     },
   });
@@ -74,7 +74,7 @@ export default function CompleteRegistration() {
       onSuccess: () => {
         toast({
           title: "Registration Complete",
-          description: "Welcome to Elizabeth Okwori's Confectionery.",
+          description: "Welcome to the Elizabeth Onyaole Okwori Memorial Foundation.",
         });
         queryClient.invalidateQueries({ queryKey: getGetMyProfileQueryKey() });
         setLocation(values.role === "participant" ? "/dashboard" : "/officer");

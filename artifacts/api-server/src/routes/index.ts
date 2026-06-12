@@ -9,6 +9,8 @@ import notificationsRouter from "./notifications";
 import dashboardRouter from "./dashboard";
 import settingsRouter from "./settings";
 import announcementsRouter from "./announcements";
+import sponsorshipsRouter from "./sponsorships";
+import beneficiaryRouter from "./beneficiary";
 
 const router: IRouter = Router();
 
@@ -22,5 +24,7 @@ router.use("/notifications", notificationsRouter);
 router.use("/dashboard", dashboardRouter);
 router.use("/settings", settingsRouter);
 router.use("/announcements", announcementsRouter);
+router.use("/sponsorships", sponsorshipsRouter);
+router.use("/beneficiary", beneficiaryRouter);
 
 export default router;

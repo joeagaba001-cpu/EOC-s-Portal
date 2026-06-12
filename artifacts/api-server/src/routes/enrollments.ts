@@ -41,14 +41,16 @@ router.post("/", requireAuth, async (req: any, res): Promise<void> => {
     const [user] = await db.select().from(usersTable).where(eq(usersTable.clerkId, clerkId)).limit(1);
     if (!user) { res.status(404).json({ error: "User not found" }); return; }
 
-    const { packageId, skillIds } = req.body;
-    if (!packageId || !skillIds?.length) {
-      res.status(400).json({ error: "packageId and skillIds are required" });
+    const { skillIds } = req.body;
+    if (!skillIds?.length) {
+      res.status(400).json({ error: "skillIds are required" });
       return;
     }
 
+    // Training is free — packageId is optional
     const [enrollment] = await db.insert(enrollmentsTable).values({
-      userId: user.id, packageId, status: "pending",
+      userId: user.id,
+      status: "confirmed",
     }).returning();
 
     await db.insert(enrollmentSkillsTable).values(
@@ -59,17 +61,21 @@ router.post("/", requireAuth, async (req: any, res): Promise<void> => {
     if (officers.length > 0) {
       await db.insert(notificationsTable).values(
         officers.map(o => ({
-          userId: o.id, title: "New Skills Selection",
-          message: `${user.fullName} has selected catering skills and chosen a package.`,
-          type: "skills", isRead: false,
+          userId: o.id,
+          title: "New Training Application",
+          message: `${user.fullName} has applied for free catering training (${skillIds.length} skill${skillIds.length > 1 ? "s" : ""}).`,
+          type: "skills",
+          isRead: false,
         }))
       );
     }
 
     await db.insert(notificationsTable).values({
-      userId: user.id, title: "Skills Selected Successfully",
-      message: "Your catering skills have been saved. Please proceed with payment via WhatsApp.",
-      type: "skills", isRead: false,
+      userId: user.id,
+      title: "Application Successful!",
+      message: "You have successfully applied for this free training program. The NGO will be in touch with further details.",
+      type: "success",
+      isRead: false,
     });
 
     const enriched = await enrichEnrollment(enrollment);
@@ -107,23 +113,6 @@ router.patch("/:id/abort", requireAuth, async (req: any, res): Promise<void> => 
 
     if (!updated) { res.status(404).json({ error: "Enrollment not found" }); return; }
 
-    await db.insert(notificationsTable).values({
-      userId: user.id, title: "Enrollment Cancelled",
-      message: "Your enrollment process has been cancelled.",
-      type: "info", isRead: false,
-    });
-
-    const officers = await db.select().from(usersTable).where(eq(usersTable.role, "officer"));
-    if (officers.length > 0) {
-      await db.insert(notificationsTable).values(
-        officers.map(o => ({
-          userId: o.id, title: "Enrollment Aborted",
-          message: `${user.fullName} has aborted the enrollment process.`,
-          type: "warning", isRead: false,
-        }))
-      );
-    }
-
     const enriched = await enrichEnrollment(updated);
     res.json(enriched);
   } catch (err) {
@@ -134,7 +123,9 @@ router.patch("/:id/abort", requireAuth, async (req: any, res): Promise<void> => 
 
 async function enrichEnrollment(enrollment: any) {
   const [user] = await db.select().from(usersTable).where(eq(usersTable.id, enrollment.userId)).limit(1);
-  const [pkg] = await db.select().from(packagesTable).where(eq(packagesTable.id, enrollment.packageId)).limit(1);
+  const pkg = enrollment.packageId
+    ? (await db.select().from(packagesTable).where(eq(packagesTable.id, enrollment.packageId)).limit(1))[0]
+    : null;
   const skillLinks = await db.select().from(enrollmentSkillsTable).where(eq(enrollmentSkillsTable.enrollmentId, enrollment.id));
   const skillIds = skillLinks.map(s => s.skillId);
   const skills = skillIds.length > 0
@@ -142,7 +133,7 @@ async function enrichEnrollment(enrollment: any) {
     : [];
 
   return {
-    id: enrollment.id, userId: enrollment.userId, packageId: enrollment.packageId,
+    id: enrollment.id, userId: enrollment.userId, packageId: enrollment.packageId ?? null,
     status: enrollment.status, skillIds, whatsappNumber: enrollment.whatsappNumber,
     createdAt: enrollment.createdAt,
     user: user ? { id: user.id, clerkId: user.clerkId, fullName: user.fullName, email: user.email, phone: user.phone, sex: user.sex, role: user.role, profilePhotoUrl: user.profilePhotoUrl, createdAt: user.createdAt } : null,
