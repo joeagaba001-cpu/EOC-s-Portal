@@ -113,6 +113,54 @@ export default function Home() {
           </div>
         </section>
 
+        {/* How to Apply */}
+        <section className="py-24 bg-accent/50">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="text-center mb-14">
+              <p className="text-secondary font-semibold uppercase tracking-widest text-xs mb-3">Enrolment is Free & Easy</p>
+              <h2 className="text-4xl font-serif font-bold text-primary">How to Apply for Training</h2>
+              <p className="text-muted-foreground mt-4 max-w-xl mx-auto">Join hundreds of Nigerians gaining professional catering skills — at no cost. Follow these three simple steps.</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-14">
+              {[
+                {
+                  step: "01",
+                  icon: "📝",
+                  title: "Create Your Account",
+                  desc: "Click \"Apply for Free Training\" and fill in your name, email address, and create a password. It takes less than 2 minutes.",
+                },
+                {
+                  step: "02",
+                  icon: "👤",
+                  title: "Complete Your Profile",
+                  desc: "Enter your full name and phone number so our team can reach you with training schedules and venue details.",
+                },
+                {
+                  step: "03",
+                  icon: "🎓",
+                  title: "Choose Your Skills",
+                  desc: "Pick one or more catering programs you want to learn — baking, cake decoration, event catering, and more. Your place is confirmed instantly.",
+                },
+              ].map((item) => (
+                <div key={item.step} className="relative bg-white rounded-3xl p-8 shadow-sm border border-primary/10 text-center group hover:shadow-md hover:border-primary/30 transition-all">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-9 h-9 bg-secondary text-secondary-foreground font-serif font-bold text-sm rounded-full flex items-center justify-center shadow-md">
+                    {item.step}
+                  </div>
+                  <div className="text-5xl mb-5 mt-2">{item.icon}</div>
+                  <h3 className="font-serif font-bold text-xl text-primary mb-3">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+            <div className="text-center">
+              <Link href="/sign-up" className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground font-bold px-10 py-4 rounded-full text-lg hover:bg-secondary/90 transition-all shadow-md hover:shadow-lg">
+                ✦ Apply for Free Training Now <ChevronRight className="w-5 h-5" />
+              </Link>
+              <p className="mt-4 text-sm text-muted-foreground">No fees. No forms. Enrolment confirmed in minutes.</p>
+            </div>
+          </div>
+        </section>
+
         {/* Mission */}
         <section className="py-24 bg-primary text-white">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -191,6 +239,7 @@ export default function Home() {
             <div>
               <h4 className="text-white font-semibold mb-4">Quick Links</h4>
               <div className="space-y-2 text-sm">
+                <div><Link href="/sign-up" className="text-secondary font-semibold hover:text-secondary/80 transition-colors">✦ Apply for Free Training</Link></div>
                 <div><Link href="/about" className="hover:text-white transition-colors">About Us</Link></div>
                 <div><Link href="/programs" className="hover:text-white transition-colors">Training Programs</Link></div>
                 <div><Link href="/sponsorship" className="hover:text-white transition-colors">Sponsorship</Link></div>

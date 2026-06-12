@@ -6,9 +6,7 @@ import { Show } from "@clerk/react";
 const navLinks = [
   { href: "/about", label: "About Us" },
   { href: "/programs", label: "Training Programs" },
-  { href: "/sponsorship", label: "Sponsorship" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/blog", label: "Blog" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
@@ -36,6 +34,11 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
                 {l.label}
               </Link>
             ))}
+            <Show when="signed-out">
+              <Link href="/sign-up" className="text-sm font-semibold text-secondary border border-secondary/40 bg-secondary/10 px-4 py-1.5 rounded-full hover:bg-secondary/20 transition-colors whitespace-nowrap">
+                ✦ Apply Now
+              </Link>
+            </Show>
           </div>
 
           <div className="hidden lg:flex items-center gap-3">
@@ -82,6 +85,10 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
                 </Show>
                 <Show when="signed-out">
                   <Link href="/sign-up" onClick={() => setMobileOpen(false)}
+                    className="block text-center bg-secondary text-secondary-foreground font-bold px-4 py-2.5 rounded-full text-sm">
+                    ✦ Apply for Free Training
+                  </Link>
+                  <Link href="/sign-up" onClick={() => setMobileOpen(false)}
                     className="block text-center bg-primary text-white font-semibold px-4 py-2.5 rounded-full text-sm">
                     Register Free
                   </Link>
@@ -116,6 +123,7 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
               <h4 className="text-white font-semibold mb-4">Quick Links</h4>
               <div className="space-y-2 text-sm">
                 {[
+                  { href: "/sign-up", label: "✦ Apply for Free Training" },
                   { href: "/about", label: "About Us" },
                   { href: "/programs", label: "Training Programs" },
                   { href: "/sponsorship", label: "Sponsorship" },
