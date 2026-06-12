@@ -6,6 +6,7 @@ import { Show } from "@clerk/react";
 const navLinks = [
   { href: "/about", label: "About Us" },
   { href: "/programs", label: "Training Programs" },
+  { href: "/order", label: "Order Catering" },
   { href: "/gallery", label: "Gallery" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
@@ -71,8 +72,8 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
               <div className="flex-1 overflow-y-auto py-4">
                 {navLinks.map(l => (
                   <Link key={l.href} href={l.href} onClick={() => setMobileOpen(false)}
-                    className="block px-5 py-3 text-sm font-medium text-foreground hover:bg-accent hover:text-primary transition-colors">
-                    {l.label}
+                    className={`block px-5 py-3 text-sm font-medium transition-colors ${l.href === "/order" ? "text-secondary font-semibold hover:bg-secondary/10" : "text-foreground hover:bg-accent hover:text-primary"}`}>
+                    {l.href === "/order" ? "🍽️ " : ""}{l.label}
                   </Link>
                 ))}
               </div>

@@ -11,6 +11,7 @@ import settingsRouter from "./settings";
 import announcementsRouter from "./announcements";
 import sponsorshipsRouter from "./sponsorships";
 import beneficiaryRouter from "./beneficiary";
+import ordersRouter from "./orders";
 
 const router: IRouter = Router();
 
@@ -26,5 +27,6 @@ router.use("/settings", settingsRouter);
 router.use("/announcements", announcementsRouter);
 router.use("/sponsorships", sponsorshipsRouter);
 router.use("/beneficiary", beneficiaryRouter);
+router.use("/orders", ordersRouter);
 
 export default router;

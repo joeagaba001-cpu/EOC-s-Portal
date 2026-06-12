@@ -14,6 +14,7 @@ import {
   X,
   Heart,
   Banknote,
+  UtensilsCrossed,
 } from "lucide-react";
 
 export function OfficerLayout({ children }: { children: React.ReactNode }) {
@@ -28,6 +29,7 @@ export function OfficerLayout({ children }: { children: React.ReactNode }) {
     { name: 'Skills', href: '/officer/skills', icon: BookOpen },
     { name: 'Packages', href: '/officer/packages', icon: PackageSearch },
     { name: 'Notifications', href: '/officer/notifications', icon: BellRing },
+    { name: 'Catering Orders', href: '/officer/orders', icon: UtensilsCrossed },
     { name: 'Sponsorships', href: '/officer/sponsorships', icon: Heart },
     { name: 'Fund Requests', href: '/officer/beneficiary', icon: Banknote },
     { name: 'Settings', href: '/officer/settings', icon: Settings },
