@@ -25,6 +25,8 @@ const OfficerSkills = lazy(() => import("./pages/officer/OfficerSkills"));
 const OfficerPackages = lazy(() => import("./pages/officer/OfficerPackages"));
 const OfficerNotifications = lazy(() => import("./pages/officer/OfficerNotifications"));
 const OfficerSettings = lazy(() => import("./pages/officer/OfficerSettings"));
+const OfficerSponsorships = lazy(() => import("./pages/officer/OfficerSponsorships"));
+const OfficerBeneficiary = lazy(() => import("./pages/officer/OfficerBeneficiary"));
 
 const About = lazy(() => import("./pages/About"));
 const Programs = lazy(() => import("./pages/Programs"));
@@ -196,6 +198,8 @@ function ClerkProviderWithRoutes() {
             <Route path="/officer/packages" component={OfficerPackages} />
             <Route path="/officer/notifications" component={OfficerNotifications} />
             <Route path="/officer/settings" component={OfficerSettings} />
+            <Route path="/officer/sponsorships" component={OfficerSponsorships} />
+            <Route path="/officer/beneficiary" component={OfficerBeneficiary} />
 
             <Route component={NotFound} />
           </Switch>
